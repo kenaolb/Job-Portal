@@ -34,9 +34,18 @@ Route::middleware('auth:api')->group(function () {
     Route::patch('applications/{id}', [ApplicationController::class, 'updateStatus'])->middleware('employer');
     
     // Resume routes
+    Route::prefix('resumes')->middleware('applicant')->group(function () {
+        Route::get('/', [ResumeController::class, 'index']);
+        Route::post('/upload', [ResumeController::class, 'upload']);
+        Route::get('/{id}', [ResumeController::class, 'show']);
+        Route::put('/{id}', [ResumeController::class, 'update']);
+        Route::delete('/{id}', [ResumeController::class, 'destroy']);
+        Route::get('/{id}/download', [ResumeController::class, 'download']);
+    });
+
+    // Keep the old routes for backward compatibility
     Route::post('resume/upload', [ResumeController::class, 'upload'])->middleware('applicant');
     Route::get('resume', [ResumeController::class, 'show'])->middleware('applicant');
-    Route::delete('resume', [ResumeController::class, 'destroy'])->middleware('applicant');
     Route::get('resume/download', [ResumeController::class, 'download'])->middleware('applicant');
     
     // Admin routes

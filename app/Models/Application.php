@@ -10,7 +10,7 @@ class Application extends Model
     use HasFactory;
 
     protected $fillable = [
-        'job_id', 'user_id', 'cover_letter', 'status'
+        'job_id', 'user_id', 'resume_id', 'cover_letter', 'status'
     ];
 
     public function job()
@@ -21,5 +21,10 @@ class Application extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function resume()
+    {
+        return $this->belongsTo(Resume::class);
     }
 }
