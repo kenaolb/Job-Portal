@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 
 class ApplicationController extends Controller
 {
+    // Submit a job application
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -86,6 +87,7 @@ class ApplicationController extends Controller
         ], 201);
     }
 
+    // Handle resume upload and set as default
     private function uploadResume($file)
     {
         // Delete existing default resume if any
@@ -110,6 +112,7 @@ class ApplicationController extends Controller
         ]);
     }
 
+    // View applications for a specific user - only by the user themselves or admin
     public function userApplications($userId)
     {
         // Users can only view their own applications, admins can view all
@@ -124,7 +127,8 @@ class ApplicationController extends Controller
 
         return response()->json($applications);
     }
-
+  
+    // View applications for a specific job - only by job creator or admin
     public function jobApplications($jobId)
     {
         $job = Job::find($jobId);
@@ -146,6 +150,7 @@ class ApplicationController extends Controller
         return response()->json($applications);
     }
 
+    // Update application status (shortlist/reject) - only by job creator or admin
     public function updateStatus(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [

@@ -9,12 +9,14 @@ use Illuminate\Support\Facades\Validator;
 
 class ResumeController extends Controller
 {
+    // List all resumes for the authenticated user
     public function index()
     {
         $resumes = Resume::where('user_id', auth()->id())->get();
         return response()->json($resumes);
     }
-
+   
+    // Handle resume upload and set as default
     public function upload(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -50,6 +52,8 @@ class ResumeController extends Controller
         ], 201);
     }
 
+
+    // View a specific resume or default resume
     public function show($id = null)
     {
         // If no ID provided, show default resume
@@ -70,6 +74,7 @@ class ResumeController extends Controller
         return response()->json($resume);
     }
 
+    // Update resume (e.g., set as default)
     public function update(Request $request, $id)
     {
         $resume = Resume::where('id', $id)
@@ -103,6 +108,7 @@ class ResumeController extends Controller
         ]);
     }
 
+    // Delete a resume
     public function destroy($id)
     {
         $resume = Resume::where('id', $id)
@@ -132,7 +138,7 @@ class ResumeController extends Controller
 
         return response()->json(['message' => 'Resume deleted successfully']);
     }
-
+// Download resume file
     public function download($id = null)
     {
         // If no ID provided, download default resume

@@ -10,6 +10,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
+    //register functionality
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -44,7 +45,7 @@ class AuthController extends Controller
             'expires_in' => auth()->factory()->getTTL() * 60
         ], 201);
     }
-
+   //Login functionality
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
@@ -55,24 +56,24 @@ class AuthController extends Controller
 
         return $this->respondWithToken($token);
     }
-
+    //log out fuctionality
     public function logout()
     {
         auth()->logout();
 
         return response()->json(['message' => 'Successfully logged out']);
     }
-
+    //for refresh token: is when user refresh the page it will stay logged in
     public function refresh()
     {
         return $this->respondWithToken(auth('api')->refresh());
-    }
-
+    } 
+    //profile functionality
     public function profile()
     {
         return response()->json(auth()->user());
     }
-
+   //token response structure
     protected function respondWithToken($token)
     {
         return response()->json([

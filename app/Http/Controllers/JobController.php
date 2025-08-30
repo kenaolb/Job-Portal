@@ -8,12 +8,14 @@ use Illuminate\Support\Facades\Validator;
 
 class JobController extends Controller
 {
+    // List all jobs
     public function index()
     {
         $jobs = Job::with('employer')->latest()->get();
         return response()->json($jobs);
     }
 
+    // Create a new job posting
     public function store(Request $request)
     {
         // Check if user is employer or admin
@@ -52,6 +54,7 @@ class JobController extends Controller
         ], 201);
     }
 
+    // View a specific job
     public function show($id)
     {
         $job = Job::with('employer')->find($id);
@@ -62,7 +65,7 @@ class JobController extends Controller
 
         return response()->json($job);
     }
-
+    // Delete a job posting
     public function destroy($id)
     {
         $job = Job::find($id);
