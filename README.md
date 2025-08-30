@@ -4,7 +4,7 @@ A RESTful backend API for a mini job portal (TalentHub), built with Laravel. The
 
 ## 🚀 Features
 
-JWT-based Authentication & Authorization
+JWT-based Authentication(With refresh token) & Authorization
 
 Role Management: Admin, Employer, Applicant
 
